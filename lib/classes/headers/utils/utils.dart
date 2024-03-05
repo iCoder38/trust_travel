@@ -34,6 +34,7 @@ var kGoogle_API_KEY = 'AIzaSyAULQHYzpkutmeYPo9nU3BIGTlFlw9ZuH8';
 // live : user
 // var user = 'members';
 //
+//
 // const String FIREBASE_STORAGE_BUCKET_NAME = 'Dev-Synapse-Bucket';
 const String FIREBASE_STORAGE_COMMUNITY_URL =
     '$FIREBASE_STORAGE_BUCKET_NAME/public/communities/';
@@ -56,6 +57,8 @@ var strActivateYourFeedMessage =
 var strDeactivateYourFeedMessage =
     'This post will be deactivated and hide it from everywhere. If you want to activate it again so activate it from your profile';
 //
+var strCreateTravel_error_date = "Start date should be greater then end date";
+var strCreateTravel_error_stay = "Please select atleast one stay";
 /* ======================== COLOR ================ */ //
 var select_color = Colors.redAccent;
 /* ======================== ALERT MESSAGE ================ */ //

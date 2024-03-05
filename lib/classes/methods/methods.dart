@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../headers/utils/utils.dart';
 import '../screens/travel/add_travel/travel_details_two/travel_details_two.dart';
 
-checkValidation(
+checkDatesValidation(
   context,
   startDate,
   endDate,
@@ -41,7 +41,8 @@ checkValidation(
   } else {
     final snackBar = SnackBar(
       content: text_bold_mons(
-        'Start date should be greater then end date',
+        //
+        strCreateTravel_error_date,
         Colors.white,
         14.0,
       ),

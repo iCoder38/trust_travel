@@ -886,9 +886,8 @@ class _TravelBuddyPrefrencesScreenState
   */
 
   saveAddTravelDataInDB() async {
-    CollectionReference users = FirebaseFirestore.instance.collection(
-      '${strFirebaseMode}travel/list/details',
-    );
+    CollectionReference users =
+        FirebaseFirestore.instance.collection(createTravelPath);
     users
         .add(
           {
@@ -925,12 +924,7 @@ class _TravelBuddyPrefrencesScreenState
   }
 
   updateTravelDocument(documentId) {
-    FirebaseFirestore.instance
-        .collection(
-          '${strFirebaseMode}travel/list/details',
-        )
-        .doc(documentId)
-        .set(
+    FirebaseFirestore.instance.collection(createTravelPath).doc(documentId).set(
       {
         'document_id': documentId.toString(),
       },

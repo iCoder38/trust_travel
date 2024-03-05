@@ -486,7 +486,7 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         });*/
                         HapticFeedback.lightImpact();
                         if (formKey.currentState!.validate()) {
-                          checkValidation(
+                          checkDatesValidation(
                             context,
                             contStartDate.text.toString(),
                             contEndDate.text.toString(),

@@ -757,34 +757,58 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                       onTap: () async {
                         HapticFeedback.lightImpact();
                         if (formKey.currentState!.validate()) {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              // builder: (context) => const HomeFeedScreen(),
-                              builder: (context) => TravelBuddyPrefrencesScreen(
-                                getInBuddyTripTitle:
-                                    widget.strTravelTitle.toString(),
-                                getInBuddyYouFrom:
-                                    widget.strTravelYouFrom.toString(),
-                                getInBuddyGoingTo:
-                                    widget.strTravelGoingTo.toString(),
-                                getInBuddyStartDate:
-                                    widget.strTravelStartDate.toString(),
-                                getInBuddyEndDate:
-                                    widget.strTravelEndDate.toString(),
-                                getModeVehicle: contMode.text.toString(),
-                                getModeVehicleName:
-                                    contPrivateCarName.text.toString(),
-                                getModeVehicleSeatCapacity:
-                                    contPrivateCarSeat.text.toString(),
-                                getModeVehicleGas:
-                                    contPrivateCarGasCharge.text.toString(),
-                                getTotalNumberOfDays:
-                                    strTotalNumbersOfDays.toString(),
-                                arrGetStayData: arrAllOfStays,
+                          // print(arrAllOfStays.length);
+                          var arrFilter = [];
+                          for (int i = 0; i < arrAllOfStays.length; i++) {
+                            //
+                            if (arrAllOfStays[i]['status'] == '1') {
+                              //
+                              arrFilter.add(arrAllOfStays[i]['name']);
+                            }
+                          }
+                          if (arrFilter.isEmpty) {
+                            final snackBar = SnackBar(
+                              content: text_bold_mons(
+                                //
+                                strCreateTravel_error_stay,
+                                Colors.white,
+                                14.0,
                               ),
-                            ),
-                          );
+                              backgroundColor: Colors.redAccent,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                // builder: (context) => const HomeFeedScreen(),
+                                builder: (context) =>
+                                    TravelBuddyPrefrencesScreen(
+                                  getInBuddyTripTitle:
+                                      widget.strTravelTitle.toString(),
+                                  getInBuddyYouFrom:
+                                      widget.strTravelYouFrom.toString(),
+                                  getInBuddyGoingTo:
+                                      widget.strTravelGoingTo.toString(),
+                                  getInBuddyStartDate:
+                                      widget.strTravelStartDate.toString(),
+                                  getInBuddyEndDate:
+                                      widget.strTravelEndDate.toString(),
+                                  getModeVehicle: contMode.text.toString(),
+                                  getModeVehicleName:
+                                      contPrivateCarName.text.toString(),
+                                  getModeVehicleSeatCapacity:
+                                      contPrivateCarSeat.text.toString(),
+                                  getModeVehicleGas:
+                                      contPrivateCarGasCharge.text.toString(),
+                                  getTotalNumberOfDays:
+                                      strTotalNumbersOfDays.toString(),
+                                  arrGetStayData: arrAllOfStays,
+                                ),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: Container(
