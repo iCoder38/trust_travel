@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 //
 import 'package:jiffy/jiffy.dart';
+
+import '../../screens/travel/add_travel/travel_details_two/travel_details_two.dart';
 //
 
 /* ========================FIREBASE MODE ======================== */ //

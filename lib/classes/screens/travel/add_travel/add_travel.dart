@@ -15,6 +15,8 @@ import 'package:trust_travel/classes/screens/travel/add_travel/travel_details_tw
 import 'package:trust_travel/classes/screens/travel/add_travel/travel_vehicle_prefrence/travel_vehicle_prefrence.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../methods/methods.dart';
+
 class AddTravelScreen extends StatefulWidget {
   const AddTravelScreen({super.key});
 
@@ -47,6 +49,7 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
     contGoingTo = TextEditingController();
     contStartDate = TextEditingController();
     contEndDate = TextEditingController();
+
     super.initState();
   }
 
@@ -483,19 +486,13 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         });*/
                         HapticFeedback.lightImpact();
                         if (formKey.currentState!.validate()) {
-                          Navigator.push(
+                          checkValidation(
                             context,
-                            MaterialPageRoute(
-                              // builder: (context) => const HomeFeedScreen(),
-                              builder: (context) => TravelDetailsTwoScreen(
-                                strTravelTitle: contTripTitle.text.toString(),
-                                strTravelYouFrom: contYouFrom.text.toString(),
-                                strTravelGoingTo: contGoingTo.text.toString(),
-                                strTravelStartDate:
-                                    contStartDate.text.toString(),
-                                strTravelEndDate: contEndDate.text.toString(),
-                              ),
-                            ),
+                            contStartDate.text.toString(),
+                            contEndDate.text.toString(),
+                            contTripTitle.text.toString(),
+                            contYouFrom.text.toString(),
+                            contGoingTo.text.toString(),
                           );
                         }
                       },

@@ -754,10 +754,10 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                     ),
                     SizedBox(height: 40),*/
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         HapticFeedback.lightImpact();
                         if (formKey.currentState!.validate()) {
-                          Navigator.push(
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
                               // builder: (context) => const HomeFeedScreen(),
