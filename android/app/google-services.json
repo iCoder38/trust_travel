@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "64939720946",
+    "project_id": "trust-travel-dd450",
+    "storage_bucket": "trust-travel-dd450.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64939720946:android:30f1b98fe744ca075dd06b",
+        "android_client_info": {
+          "package_name": "com.trust.travel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxrse7xG8wupcqiEH8lcLOUwYLFZmuszk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
