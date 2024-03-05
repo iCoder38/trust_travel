@@ -2,6 +2,7 @@ import 'package:country_state_city/utils/utils.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 // import 'package:flutter/rendering.dart';
@@ -480,6 +481,7 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         setState(() {
                           strButtonLoader = true;
                         });
+                        HapticFeedback.lightImpact();
                         Navigator.push(
                           context,
                           MaterialPageRoute(

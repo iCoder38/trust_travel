@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trust_travel/classes/screens/travel/add_travel/travel_buddy_prefrences/travel_buddy_prefrences.dart';
 
 import '../../../../headers/utils/utils.dart';
 import '../travel_budget/travel_budget.dart';
@@ -504,11 +506,12 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                   ),
             GestureDetector(
               onTap: () {
+                HapticFeedback.lightImpact();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     // builder: (context) => const HomeFeedScreen(),
-                    builder: (context) => const TravelBudgetScreen(),
+                    builder: (context) => const TravelBuddyPrefrencesScreen(),
                   ),
                 );
               },
