@@ -13,7 +13,12 @@ import '../screens/add_dashboard/add_dashboard.dart';
 
 //
 class BottomBarScreen extends StatefulWidget {
-  const BottomBarScreen({super.key});
+  const BottomBarScreen({
+    super.key,
+    required this.specificBarIndex,
+  });
+
+  final int specificBarIndex;
 
   @override
   State<BottomBarScreen> createState() => _BottomBarScreenState();
@@ -22,7 +27,7 @@ class BottomBarScreen extends StatefulWidget {
 class _BottomBarScreenState extends State<BottomBarScreen> {
   //
   final PageStorageBucket bucket = PageStorageBucket();
-  int selectedIndex = 0;
+  int selectedIndex = 2;
 
   /// Controller to handle PageView and also handles initial page
   final _pageController = PageController(initialPage: 0);
@@ -30,8 +35,14 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int maxCount = 5;
 
 // lazy index stack
-  int lazyIndex = 0;
+  // int lazyIndex = widget.specificBarIndex;
 //
+  @override
+  void initState() {
+    selectedIndex = widget.specificBarIndex;
+    super.initState();
+  }
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -47,7 +58,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       },
       child: Scaffold(
         body: LazyLoadIndexedStack(
-          index: lazyIndex,
+          index: selectedIndex,
           children: const [
             //
             // home
@@ -71,9 +82,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             selectedFontSize: 14.0,
             // backgroundColor: home_page_bottom_tab_color(),
             onTap: (index) {
-              setState(() => lazyIndex = index);
+              setState(() => selectedIndex = index);
             },
-            currentIndex: lazyIndex,
+            currentIndex: selectedIndex,
             items: const [
               BottomNavigationBarItem(
                 // backgroundColor: home_page_bottom_tab_color(),

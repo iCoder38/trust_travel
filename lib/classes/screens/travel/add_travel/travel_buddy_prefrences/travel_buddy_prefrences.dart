@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../bottom_bar/bottom_bar.dart';
 import '../../../../firebase/path/path.dart';
 import '../../../../headers/utils/utils.dart';
 
@@ -950,14 +951,21 @@ class _TravelBuddyPrefrencesScreenState
           ),
           backgroundColor: Colors.green,
         );
-
-        // Find the ScaffoldMessenger in the widget tree
-        // and use it to show a SnackBar.
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         setState(() {
           strButtonLoader = false;
         });
+        successPush();
       },
+    );
+  }
+
+  successPush() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          // builder: (context) => const HomeFeedScreen(),
+          builder: (context) => const BottomBarScreen(specificBarIndex: 2)),
     );
   }
 }

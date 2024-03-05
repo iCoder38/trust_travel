@@ -26,9 +26,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        // builder: (context) => const HomeFeedScreen(),
-        builder: (context) => const BottomBarScreen(),
-      ),
+          // builder: (context) => const HomeFeedScreen(),
+          builder: (context) => const BottomBarScreen(specificBarIndex: 0)),
     );
   }
 
