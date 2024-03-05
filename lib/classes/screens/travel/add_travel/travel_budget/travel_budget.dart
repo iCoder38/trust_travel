@@ -328,13 +328,13 @@ class _TravelBudgetScreenState extends State<TravelBudgetScreen> {
                   ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     // builder: (context) => const HomeFeedScreen(),
                     builder: (context) => const TravelBuddyPrefrencesScreen(),
                   ),
-                );
+                );*/
               },
               child: Container(
                 margin: const EdgeInsets.all(16.0),

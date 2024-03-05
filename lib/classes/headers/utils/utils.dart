@@ -10,8 +10,6 @@ import 'package:jiffy/jiffy.dart';
 
 /* ========================FIREBASE MODE ======================== */ //
 // TEST
-// test mode
-var strFirebaseMode = 'mode/test/';
 // test : user
 var user = 'test_members/';
 
@@ -86,6 +84,13 @@ func_handle_error(error_type) {
   return error_message;
 }
 
+/* ================================================================ */
+/* ========== CONVERT TOTAL NUMBER OF DAYS ======================== */
+int daysBetween(DateTime from, DateTime to) {
+  from = DateTime(from.year, from.month, from.day);
+  to = DateTime(to.year, to.month, to.day);
+  return (to.difference(from).inHours / 24).round();
+}
 /* ================================================================ */
 /* ========== CONVERT TIMESTAMP TO DATE AND TIME =============== */
 

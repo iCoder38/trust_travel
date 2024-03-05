@@ -478,18 +478,26 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                     // const Divider(),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
+                        /*setState(() {
                           strButtonLoader = true;
-                        });
+                        });*/
                         HapticFeedback.lightImpact();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            // builder: (context) => const HomeFeedScreen(),
-                            builder: (context) =>
-                                const TravelDetailsTwoScreen(),
-                          ),
-                        );
+                        if (formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              // builder: (context) => const HomeFeedScreen(),
+                              builder: (context) => TravelDetailsTwoScreen(
+                                strTravelTitle: contTripTitle.text.toString(),
+                                strTravelYouFrom: contYouFrom.text.toString(),
+                                strTravelGoingTo: contGoingTo.text.toString(),
+                                strTravelStartDate:
+                                    contStartDate.text.toString(),
+                                strTravelEndDate: contEndDate.text.toString(),
+                              ),
+                            ),
+                          );
+                        }
                       },
                       child: Container(
                         margin: const EdgeInsets.all(16.0),

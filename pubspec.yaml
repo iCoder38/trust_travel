@@ -55,6 +55,7 @@ dependencies:
   uuid:
   country_state_city: ^0.1.6
   adaptive_action_sheet: ^2.0.3
+  multi_select_flutter: ^4.1.3
 
 dev_dependencies:
   flutter_test:
