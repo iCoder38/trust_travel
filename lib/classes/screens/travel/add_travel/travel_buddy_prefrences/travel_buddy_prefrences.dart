@@ -887,7 +887,7 @@ class _TravelBuddyPrefrencesScreenState
 
   saveAddTravelDataInDB() async {
     CollectionReference users =
-        FirebaseFirestore.instance.collection(createTravelPath);
+        FirebaseFirestore.instance.collection(createOrAddTravelPath);
     users
         .add(
           {
@@ -909,7 +909,7 @@ class _TravelBuddyPrefrencesScreenState
             'travel_age_range': contAgeRange.text.toString(),
             'travel_stays': arrFilterData,
             // time
-            'time_Stamp': DateTime.now().millisecondsSinceEpoch,
+            'time_stamp': DateTime.now().millisecondsSinceEpoch,
           },
         )
         .then(
@@ -924,7 +924,10 @@ class _TravelBuddyPrefrencesScreenState
   }
 
   updateTravelDocument(documentId) {
-    FirebaseFirestore.instance.collection(createTravelPath).doc(documentId).set(
+    FirebaseFirestore.instance
+        .collection(createOrAddTravelPath)
+        .doc(documentId)
+        .set(
       {
         'document_id': documentId.toString(),
       },

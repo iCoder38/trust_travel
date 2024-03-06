@@ -1,7 +1,17 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+// import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 import 'package:trust_travel/classes/headers/utils/utils.dart';
+
+import '../../../firebase/path/path.dart';
+import '../../../methods/methods.dart';
 
 class TravelListScreen extends StatefulWidget {
   const TravelListScreen({super.key});
@@ -11,6 +21,8 @@ class TravelListScreen extends StatefulWidget {
 }
 
 class _TravelListScreenState extends State<TravelListScreen> {
+  //
+  var travelStatus = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,309 +34,227 @@ class _TravelListScreenState extends State<TravelListScreen> {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Container(
-              height: 40,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(
-                    14.0,
-                  ),
-                  border: Border.all()),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: FirestoreListView<Map<String, dynamic>>(
+        cacheExtent: 9999,
+        addAutomaticKeepAlives: true,
+        pageSize: 6,
+        query: FirebaseFirestore.instance
+            .collection(
+              createOrAddTravelPath,
+            )
+            .orderBy('time_stamp', descending: true),
+        // .where('active', isEqualTo: 'yes'),
+        itemBuilder: (context, snapshot) {
+          Map<String, dynamic> allTravels = snapshot.data();
+          // print(allEvents);
+          return Column(
+            children: [
+              Column(
                 children: [
-                  Expanded(
-                    child: Container(
-                      height: 80,
-                      //width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(
-                          12.0,
-                        ),
-                      ),
-                      child: Center(
-                        child: textWithRegularStyle(
-                          'Domestic',
-                          14.0,
-                          Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 80,
-                      //width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(
-                          14.0,
-                        ),
-                      ),
-                      child: Center(
-                        child: textWithRegularStyle(
-                          'International',
-                          14.0,
-                          Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    for (int i = 0; i < 10; i++) ...[
-                      Container(
-                        height: 240,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(
-                            14.0,
+                  GestureDetector(
+                    onTap: () {
+                      //
+                      /*Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EventDetailsScreen(
+                            getEventData: allEvents,
                           ),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            14.0,
-                          ),
-                          child: Image.asset(
-                            'assets/images/dummy_party2.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ), //
-                      ListTile(
-                        title: textWithSemiBoldStyle(
-                          'Yeaaaaa!!!! to Goa',
-                          18.0,
-                          Colors.black,
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                right: 4.0,
-                                top: 4.0,
+                      );*/
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          /*SizedBox(
+                            height: 240,
+                            width: MediaQuery.of(context).size.width,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                24.0,
                               ),
-                              child: Row(
-                                children: [
-                                  const Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(
-                                      Icons.thumb_up,
-                                      size: 16.0,
-                                      color: Colors.pinkAccent,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 4.0,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: textWithRegularStyle(
-                                      'Open for all',
-                                      14.0,
-                                      Colors.pinkAccent,
-                                    ),
-                                  ),
-                                ],
+                              child: CachedNetworkImage(
+                                imageUrl: allTravels['eventImage'].toString(),
+                                fit: BoxFit.cover,
+                                // memCacheHeight: 160,
+                                // memCacheWidth: 140,
+                                placeholder: (context, url) => const SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: CircularProgressIndicator(),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
                               ),
                             ),
-                            Row(
+                          ),*/
+                          //
+                          ListTile(
+                            title: text_bold_poppins(
+                              //
+                              allTravels['travel_title'],
+                              Colors.black,
+                              18.0,
+                            ),
+                            subtitle: Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 0,
-                                    top: 8.0,
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(
-                                      Icons.calendar_month,
-                                      size: 16.0,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 4.0,
-                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    right: 8.0,
-                                    top: 8.0,
+                                    right: 4.0,
+                                    top: 4.0,
                                   ),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: textWithRegularStyle(
+                                    child: ReadMoreText(
                                       //
-                                      '25/Feb/2024 - 3/Mar/2024',
-                                      12.0,
-                                      Colors.black,
+                                      allTravels['travel_going_to'] +
+                                          ', via ' +
+                                          allTravels['travel_public_mode'],
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 12.0,
+                                      ),
+                                      trimLines: 2,
+                                      colorClickableText: Colors.pink,
+                                      trimMode: TrimMode.Line,
+                                      trimCollapsedText: '...Show more',
+                                      trimExpandedText: '...Show less',
+                                      moreStyle: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.pinkAccent,
+                                      ),
+                                      lessStyle: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.pink,
+                                      ),
                                     ),
                                   ),
+                                ),
+                                Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 0,
+                                        top: 8.0,
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Icon(
+                                          Icons.calendar_month,
+                                          size: 16.0,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 4.0,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 8.0,
+                                        top: 8.0,
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: text_regular_poppins(
+                                          //
+                                          allTravels['travel_start_date'] +
+                                              ' ~ ' +
+                                              allTravels['travel_end_date'],
+                                          Colors.black,
+                                          10.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            textWithRegularStyle(
-                              'Dishant Rajput',
-                              12.0,
-                              Colors.black,
-                            ),
-                            textWithRegularStyle(
-                              'Host from Delhi',
-                              8.0,
-                              Colors.black38,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 2.0,
-                      ),
-                    ]
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                text_regular_poppins(
+                                  '2.3k Members',
+                                  Colors.black,
+                                  12.0,
+                                ),
+                                if (compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ) ==
+                                    'on-going') ...[
+                                  text_regular_mons(
+                                    compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ),
+                                    const Color.fromARGB(255, 231, 56, 3),
+                                    12.0,
+                                  ),
+                                ] else if (compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ) ==
+                                    'expired') ...[
+                                  text_regular_mons(
+                                    compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ),
+                                    const Color.fromARGB(255, 247, 18, 1),
+                                    12.0,
+                                  ),
+                                ] else if (compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ) ==
+                                    'upcoming') ...[
+                                  text_regular_mons(
+                                    compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ),
+                                    Colors.green,
+                                    12.0,
+                                  ),
+                                ] else if (compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ) ==
+                                    'last day') ...[
+                                  text_bold_mons(
+                                    compareDates(
+                                      allTravels['travel_start_date'],
+                                      allTravels['travel_end_date'],
+                                    ),
+                                    Colors.purple,
+                                    12.0,
+                                  ),
+                                ]
 
-        /*Column(
-          children: [
-            
-            
-            
-            Container(
-              height: 240,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(
-                  14.0,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  14.0,
-                ),
-                child: Image.asset(
-                  'assets/images/dummy_party2.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            //
-            ListTile(
-              title: textWithSemiBoldStyle(
-                'To Thailand',
-                18.0,
-                Colors.black,
-              ),
-              subtitle: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 4.0,
-                      top: 4.0,
+                                // text_regular_poppins(
+                                //   //
+                                //   .toString(),
+                                //   Colors.green,
+                                //   10.0,
+                                // ),
+                              ],
+                            ),
+                            onTap: () {
+                              getCurrentDate();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.thumb_up,
-                            size: 16.0,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 4.0,
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: textWithRegularStyle(
-                            'Only for Boys',
-                            14.0,
-                            Colors.redAccent,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          right: 0,
-                          top: 8.0,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.calendar_month,
-                            size: 16.0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 4.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 8.0,
-                          top: 8.0,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: textWithRegularStyle(
-                            //
-                            '25/Feb/2024 - 3/Mar/2024',
-                            12.0,
-                            Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  textWithRegularStyle(
-                    'Dishant Rajput',
-                    12.0,
-                    Colors.black,
-                  ),
-                  textWithRegularStyle(
-                    'Host from Delhi',
-                    8.0,
-                    Colors.black38,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),*/
+            ],
+          );
+        },
       ),
     );
   }

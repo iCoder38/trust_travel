@@ -51,5 +51,71 @@ checkDatesValidation(
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
+
 ////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// TRAVEL LIST //////////////////////////////////
+///////////////////////// TRAVEL LIST DATE COMPARISION /////////////////////////
+compareDates(getStartDate, getEndDate) {
+  //
+  // user current date
+  //////////////// CURRENT DATE ////////////
+  var getUserCurrentDate = getCurrentDate();
+  ////////////// START DATE ////////////////
+  DateTime startDate = DateTime.parse(getStartDate);
+  ////////////// END DATE //////////////////
+  DateTime endDate = DateTime.parse(getEndDate);
+  DateTime userCurrentDate = DateTime.parse(getUserCurrentDate);
+  /////////////////////////////////////////////
+  if (kDebugMode) {
+    print(startDate);
+    // print(userCurrentDate);
+    print(endDate);
+  }
+  // var strTimeStatusMoment = '0';
+  // compare start date with current date
+  if (startDate.compareTo(userCurrentDate) == 0) {
+    // strTimeStatusMoment = 'same time';
+    return 'last day';
+  }
+  //
+  if (startDate.compareTo(userCurrentDate) < 0) {
+    if (kDebugMode) {
+      print('start date is lower then current date');
+    }
+    // but end date should be lower then current date
+    if (endDate.compareTo(userCurrentDate) < 0) {
+      if (kDebugMode) {
+        print('end date is lower then current date');
+      }
+      if (kDebugMode) {
+        print('start and end date both are lower');
+      }
+      return 'expired';
+    } else {
+      if (kDebugMode) {
+        print('end date is greater then current date');
+      }
+      return 'on-going';
+    }
+  } else {
+    return 'upcoming';
+  }
+
+  /*if (startDate.compareTo(userCurrentDate) < 0) {
+    strTimeStatusMoment = 'start date is before current ';
+    return 'expired';
+  }
+  //
+  if (startDate.compareTo(userCurrentDate) > 0) {
+    strTimeStatusMoment = 'start after current ';
+    //
+    if (userCurrentDate.compareTo(endDate) < 0) {
+      if (kDebugMode) {
+        print('CURRENT DATE IS SMALLER then END DATE');
+      }
+    }
+    return strTimeStatusMoment;
+  }*/
+}
 ////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////

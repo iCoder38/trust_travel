@@ -136,6 +136,17 @@ compareEventExpireData(dateIs) {
 }
 
 /* ================================================================ */
+/* ========== CURRENT TIME WITH CUSTOM FORMATTER =============== */
+getCurrentDate() {
+  var now = DateTime.now();
+  var formatter = DateFormat('yyyy-MM-dd');
+  String formattedDate = formatter.format(now);
+  if (kDebugMode) {
+    print(formattedDate);
+  }
+  return formattedDate;
+}
+/* ================================================================ */
 /* ========== CONVERT TIMESTAMP TO DATE AND TIME =============== */
 
 funcConvertTimeStampToDateAndTimeForChat(getTimeStamp) {
