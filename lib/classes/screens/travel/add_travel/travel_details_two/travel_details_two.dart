@@ -778,6 +778,20 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
+                          } else if (int.parse(
+                                  contBudgetMinimum.text.toString()) >
+                              int.parse(contBudgetMaximum.text.toString())) {
+                            final snackBar = SnackBar(
+                              content: text_bold_mons(
+                                //
+                                strCreateTravel_error_budget,
+                                Colors.white,
+                                14.0,
+                              ),
+                              backgroundColor: Colors.redAccent,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           } else {
                             await Navigator.push(
                               context,

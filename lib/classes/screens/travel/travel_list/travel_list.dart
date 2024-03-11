@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 import 'package:trust_travel/classes/headers/utils/utils.dart';
+import 'package:trust_travel/classes/screens/travel/details/travel_details.dart';
 
 import '../../../firebase/path/path.dart';
 import '../../../methods/methods.dart';
@@ -51,203 +52,40 @@ class _TravelListScreenState extends State<TravelListScreen> {
             children: [
               Column(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      //
-                      /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EventDetailsScreen(
-                            getEventData: allEvents,
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        //
+                        ListTile(
+                          title: text_bold_poppins(
+                            //
+                            allTravels['travel_title'],
+                            Colors.black,
+                            18.0,
                           ),
-                        ),
-                      );*/
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        children: [
-                          /*SizedBox(
-                            height: 240,
-                            width: MediaQuery.of(context).size.width,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                24.0,
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl: allTravels['eventImage'].toString(),
-                                fit: BoxFit.cover,
-                                // memCacheHeight: 160,
-                                // memCacheWidth: 140,
-                                placeholder: (context, url) => const SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: CircularProgressIndicator(),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                            ),
-                          ),*/
-                          //
-                          ListTile(
-                            title: text_bold_poppins(
+                          subtitle: Column(
+                            children: [
                               //
-                              allTravels['travel_title'],
-                              Colors.black,
-                              18.0,
-                            ),
-                            subtitle: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 4.0,
-                                    top: 4.0,
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: ReadMoreText(
-                                      //
-                                      allTravels['travel_going_to'] +
-                                          ', via ' +
-                                          allTravels['travel_public_mode'],
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontSize: 12.0,
-                                      ),
-                                      trimLines: 2,
-                                      colorClickableText: Colors.pink,
-                                      trimMode: TrimMode.Line,
-                                      trimCollapsedText: '...Show more',
-                                      trimExpandedText: '...Show less',
-                                      moreStyle: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.pinkAccent,
-                                      ),
-                                      lessStyle: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.pink,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 0,
-                                        top: 8.0,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Icon(
-                                          Icons.calendar_month,
-                                          size: 16.0,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 4.0,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 8.0,
-                                        top: 8.0,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: text_regular_poppins(
-                                          //
-                                          allTravels['travel_start_date'] +
-                                              ' ~ ' +
-                                              allTravels['travel_end_date'],
-                                          Colors.black,
-                                          10.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                text_regular_poppins(
-                                  '2.3k Members',
-                                  Colors.black,
-                                  12.0,
-                                ),
-                                if (compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ) ==
-                                    'on-going') ...[
-                                  text_regular_mons(
-                                    compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ),
-                                    const Color.fromARGB(255, 231, 56, 3),
-                                    12.0,
-                                  ),
-                                ] else if (compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ) ==
-                                    'expired') ...[
-                                  text_regular_mons(
-                                    compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ),
-                                    const Color.fromARGB(255, 247, 18, 1),
-                                    12.0,
-                                  ),
-                                ] else if (compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ) ==
-                                    'upcoming') ...[
-                                  text_regular_mons(
-                                    compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ),
-                                    Colors.green,
-                                    12.0,
-                                  ),
-                                ] else if (compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ) ==
-                                    'last day') ...[
-                                  text_bold_mons(
-                                    compareDates(
-                                      allTravels['travel_start_date'],
-                                      allTravels['travel_end_date'],
-                                    ),
-                                    Colors.purple,
-                                    12.0,
-                                  ),
-                                ]
-
-                                // text_regular_poppins(
-                                //   //
-                                //   .toString(),
-                                //   Colors.green,
-                                //   10.0,
-                                // ),
-                              ],
-                            ),
-                            onTap: () {
-                              getCurrentDate();
-                            },
+                              goingToUIKIT(allTravels),
+                              //
+                              travelDatesUIKIT(allTravels),
+                            ],
                           ),
-                        ],
-                      ),
+                          trailing: travelStatusUIKIT(allTravels),
+                          onTap: () {
+                            // get current date function
+                            getCurrentDate();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const TravelDetailsScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -256,6 +94,156 @@ class _TravelListScreenState extends State<TravelListScreen> {
           );
         },
       ),
+    );
+  }
+
+  Padding goingToUIKIT(Map<String, dynamic> allTravels) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 4.0,
+        top: 4.0,
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: ReadMoreText(
+          //
+          allTravels['travel_going_to'] +
+              ', via ' +
+              allTravels['travel_public_mode'],
+          style: GoogleFonts.poppins(
+            color: Colors.black,
+            fontSize: 10.0,
+          ),
+          trimLines: 2,
+          colorClickableText: Colors.pink,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: '...Show more',
+          trimExpandedText: '...Show less',
+          moreStyle: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: Colors.pinkAccent,
+          ),
+          lessStyle: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: Colors.pink,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row travelDatesUIKIT(Map<String, dynamic> allTravels) {
+    return Row(
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(
+            right: 0,
+            top: 8.0,
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Icon(
+              Icons.calendar_month,
+              size: 16.0,
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 4.0,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 8.0,
+            top: 8.0,
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: text_regular_poppins(
+              //
+              allTravels['travel_start_date'] +
+                  '\n' +
+                  allTravels['travel_end_date'],
+              Colors.black,
+              10.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column travelStatusUIKIT(Map<String, dynamic> allTravels) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        text_regular_poppins(
+          '2.3k Members',
+          Colors.black,
+          12.0,
+        ),
+        if (compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ) ==
+            'on-going') ...[
+          text_regular_mons(
+            compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ),
+            const Color.fromARGB(255, 231, 56, 3),
+            12.0,
+          ),
+        ] else if (compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ) ==
+            'expired') ...[
+          text_regular_mons(
+            compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ),
+            const Color.fromARGB(255, 247, 18, 1),
+            12.0,
+          ),
+        ] else if (compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ) ==
+            'upcoming') ...[
+          text_regular_mons(
+            compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ),
+            Colors.green,
+            12.0,
+          ),
+        ] else if (compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ) ==
+            'last day') ...[
+          text_bold_mons(
+            compareDates(
+              allTravels['travel_start_date'],
+              allTravels['travel_end_date'],
+            ),
+            Colors.purple,
+            12.0,
+          ),
+        ]
+
+        // text_regular_poppins(
+        //   //
+        //   .toString(),
+        //   Colors.green,
+        //   10.0,
+        // ),
+      ],
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:country_state_city/utils/utils.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -10,12 +12,15 @@ import 'package:intl/intl.dart';
 // import 'package:flutter/widgets.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_travel/classes/headers/utils/utils.dart';
-import 'package:trust_travel/classes/screens/travel/add_travel/travel_details_two/travel_details_two.dart';
+// import 'package:trust_travel/classes/screens/travel/add_travel/travel_details_two/travel_details_two.dart';
 // import 'package:trust_travel/classes/screens/travel/add_travel/travel_budget/travel_budget.dart';
-import 'package:trust_travel/classes/screens/travel/add_travel/travel_vehicle_prefrence/travel_vehicle_prefrence.dart';
+// import 'package:trust_travel/classes/screens/travel/add_travel/travel_vehicle_prefrence/travel_vehicle_prefrence.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../methods/methods.dart';
+
+import 'package:geocoding/geocoding.dart';
+import 'package:google_place/google_place.dart';
 
 class AddTravelScreen extends StatefulWidget {
   const AddTravelScreen({super.key});
@@ -25,6 +30,12 @@ class AddTravelScreen extends StatefulWidget {
 }
 
 class _AddTravelScreenState extends State<AddTravelScreen> {
+  //
+  var strUserEnteredLocation = '0';
+  var arrSaveAllAddress = [];
+  Timer? debounce;
+  GooglePlace? googlePlace;
+  List<AutocompletePrediction> predictions = [];
   //
   final formKey = GlobalKey<FormState>();
   var strScreenLoader = true;
@@ -296,6 +307,23 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         ),
                         maxLines: 1,
                         // maxLength: 25,
+                        onChanged: (value) {
+                          print(value);
+                          if (debounce?.isActive ?? false) debounce!.cancel();
+                          debounce =
+                              Timer(const Duration(milliseconds: 600), () {
+                            if (value.isNotEmpty) {
+                              //places api
+                              setState(() {
+                                strUserEnteredLocation = '3';
+                              });
+                              arrSaveAllAddress.clear();
+                              autoCompleteSearch(value);
+                            } else {
+                              //clear out the results
+                            }
+                          });
+                        },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter some text';
@@ -304,6 +332,22 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         },
                       ),
                     ),
+                    /*TextField(
+                      // controller: startSearchFieldController,
+                      autofocus: false,
+                      style: const TextStyle(fontSize: 16),
+                      maxLines: 2,
+                      decoration: InputDecoration(
+                          hintText: 'start enter event location',
+                          hintStyle: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                          filled: true,
+                          // fillColor: Colors.grey[200],
+                          border: InputBorder.none),
+                     
+                    ),*/
                     const SizedBox(
                       height: 20.0,
                     ), // const Divider(),
@@ -719,5 +763,73 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
               ),
             ),
     );
+  }
+
+  void autoCompleteSearch(String value) async {
+    print('rajput');
+    print(value);
+    var result = await googlePlace!.autocomplete.get(value);
+    // result.predictions[0].placeId;
+    //
+    // var place = googlePlace.autocomplete.get
+    //
+    print('rajput2');
+    if (result != null && result.predictions != null && mounted) {
+      //
+
+      if (kDebugMode) {
+        print(result.predictions!);
+      }
+      //
+      // arrSaveAllAddress.clear();
+      for (int i = 0; i < result.predictions!.length; i++) {
+        // if (kDebugMode) {
+        // print('===================================');
+        // print('========= DESCRIPTION ============');
+        // print('===================================');
+        // print(result.predictions![i]);
+        // print('========= PLACE ID ===============');
+
+        if (kDebugMode) {
+          print(result.predictions![i].placeId);
+          print(result.predictions![i].description);
+          // print(result.predictions![i].reference);
+        }
+        //
+        // print('========== GET LAT LONG ==============');
+        /*List locations = await locationFromAddress(
+              "Sector 10 Dwarka, Dwarka, Delhi, India");
+          print(locations[0]);
+          print(locations.runtimeType);
+          //
+          List locations2 = await locationFromAddress(
+              "Secunderabad Railway Station Road, Railway Officer Colony, Botiguda, Bhoiguda, Secunderabad, Telangana, India");
+          print(locations2.first.latitude);
+          print(locations2.first.longitude);*/
+        // print('===================================');
+        // print('===================================');
+        // }
+
+        // working with s api
+        // https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJQbc2YxC6vzsRkkDzYv-H-Oo&key=AIzaSyAULQHYzpkutmeYPo9nU3BIGTlFlw9ZuH8
+
+        // https://www.mapquestapi.com/staticmap/v5/map?key=AIzaSyDK7pJq7eqwA7IGthgXlg2mEJmvC-WLVlE&center=32.0100,77.3150&zoom=13&type=hyb&locations=32.0100,77.3150&size=500,300@2x
+        /*
+        https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=ATplDJZgExqwdOaTDqMr46i2ucdLbkSDxSnq3ow6KeRL06RBp4yaRmkTe2nnmOsc1ES_0Aa3F6HDnI2pyrJpaYk25iBH-ywKmiFAGZrMIZpcCupPm9e-47ZD4sdKPeKwI_-S37tu-7Vywqhq7_dbh2JuzrQa6NzfmKs4XvzaE74QKh4qOkis&key=AIzaSyAULQHYzpkutmeYPo9nU3BIGTlFlw9ZuH8
+        */
+        var setPLacesData = {
+          'name': result.predictions![i].description,
+        };
+        arrSaveAllAddress.add(setPLacesData);
+      }
+      // if (kDebugMode) {
+      //   print(result.predictions!.first.description);
+      // }
+
+      setState(() {
+        predictions = result.predictions!;
+        strUserEnteredLocation = '1';
+      });
+    }
   }
 }

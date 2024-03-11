@@ -14,7 +14,9 @@ import '../../screens/travel/add_travel/travel_details_two/travel_details_two.da
 // TEST
 // test : user
 var user = 'test_members/';
-
+//
+const kGoogleApiKey = "AIzaSyDK7pJq7eqwA7IGthgXlg2mEJmvC-WLVlE";
+//
 // /******************************************************************/
 // /********************* STORAGE ************************************/
 // const String FIREBASE_STORAGE_BUCKET_NAME = 'Live_Storage';
@@ -59,6 +61,8 @@ var strDeactivateYourFeedMessage =
 //
 var strCreateTravel_error_date = "Start date should be greater then end date";
 var strCreateTravel_error_stay = "Please select atleast one stay";
+var strCreateTravel_error_budget =
+    "Minimum budget should be less then Maximum budget";
 /* ======================== COLOR ================ */ //
 var select_color = Colors.redAccent;
 /* ======================== ALERT MESSAGE ================ */ //
