@@ -1,4 +1,5 @@
 // import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 // import 'package:flutter/cupertino.dart';
@@ -57,6 +58,30 @@ class _TravelListScreenState extends State<TravelListScreen> {
                     child: Column(
                       children: [
                         //
+                        SizedBox(
+                          height: 180,
+                          width: MediaQuery.of(context).size.width,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              12.0,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${allTravels['place_photos'][0]['refrence'].toString()}&key=$kGoogle_API_KEY',
+                              fit: BoxFit.fill,
+                              // memCacheHeight: 120,
+                              // memCacheWidth: 140,
+                              placeholder: (context, url) => SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: ShimmerLoader(
+                                      width:
+                                          MediaQuery.of(context).size.width)),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                        ),
                         ListTile(
                           title: text_bold_poppins(
                             //

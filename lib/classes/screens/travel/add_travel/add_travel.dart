@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:async';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 import 'package:country_state_city/utils/utils.dart';
 // import 'package:flutter/cupertino.dart';
@@ -36,6 +41,10 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
   Timer? debounce;
   GooglePlace? googlePlace;
   List<AutocompletePrediction> predictions = [];
+  var clickedLatitude = '';
+  var clickedLongitude = '';
+  //
+  // var strSaveImageRefrence;
   //
   final formKey = GlobalKey<FormState>();
   var strScreenLoader = true;
@@ -44,6 +53,9 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
   var strSelectGender = '1';
   var uuid = const Uuid().v4();
   var arrAllStates = [];
+  //
+  var dictPhotosFromGoogle;
+  var arrPhotosFromGoogle = [];
   // all text fields
   late final TextEditingController contTripTitle;
   late final TextEditingController contYouFrom;
@@ -60,6 +72,9 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
     contGoingTo = TextEditingController();
     contStartDate = TextEditingController();
     contEndDate = TextEditingController();
+
+    String apiKey = kGoogle_API_KEY;
+    googlePlace = GooglePlace(apiKey);
 
     super.initState();
   }
@@ -307,8 +322,8 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         ),
                         maxLines: 1,
                         // maxLength: 25,
-                        onChanged: (value) {
-                          print(value);
+                        onChanged: (value) async {
+                          // print(value);
                           if (debounce?.isActive ?? false) debounce!.cancel();
                           debounce =
                               Timer(const Duration(milliseconds: 600), () {
@@ -332,6 +347,64 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                         },
                       ),
                     ),
+                    if (strUserEnteredLocation == '0') ...[
+                      const SizedBox(
+                        height: 0,
+                      )
+                    ] else if (strUserEnteredLocation == '3') ...[
+                      text_bold_mons(
+                        'please wait...',
+                        Colors.black,
+                        14.0,
+                      )
+                    ] else ...[
+                      Column(
+                        children: [
+                          for (int i = 0;
+                              i < arrSaveAllAddress.length;
+                              i++) ...[
+                            GestureDetector(
+                              onTap: () async {
+                                //
+                                // print('locations2');
+                                List locations2 = await locationFromAddress(
+                                  arrSaveAllAddress[i]['name'].toString(),
+                                );
+                                // print(locations2);
+                                clickedLatitude =
+                                    locations2.first.latitude.toString();
+                                clickedLongitude =
+                                    locations2.first.longitude.toString();
+                                //
+                                if (kDebugMode) {
+                                  print('Latitude is ===> $clickedLatitude');
+                                  print('Longitude is ===> $clickedLongitude');
+                                }
+                                setState(() {
+                                  strUserEnteredLocation = '0';
+                                  contGoingTo.text =
+                                      arrSaveAllAddress[i]['name'].toString();
+                                });
+                                //
+                                strButtonLoader = true;
+                                getDataOfThatClickedPlace(
+                                    arrSaveAllAddress[i]['placeId'].toString());
+
+                                //
+                              },
+                              child: ListTile(
+                                title: text_bold_mons(
+                                  //
+                                  arrSaveAllAddress[i]['name'].toString(),
+                                  Colors.black,
+                                  14.0,
+                                ),
+                              ),
+                            )
+                          ]
+                        ],
+                      ),
+                    ],
                     /*TextField(
                       // controller: startSearchFieldController,
                       autofocus: false,
@@ -537,6 +610,7 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                             contTripTitle.text.toString(),
                             contYouFrom.text.toString(),
                             contGoingTo.text.toString(),
+                            arrPhotosFromGoogle,
                           );
                         }
                       },
@@ -766,14 +840,14 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
   }
 
   void autoCompleteSearch(String value) async {
-    print('rajput');
-    print(value);
+    // print('rajput');
+    // print(value);
     var result = await googlePlace!.autocomplete.get(value);
     // result.predictions[0].placeId;
     //
     // var place = googlePlace.autocomplete.get
     //
-    print('rajput2');
+    // print('rajput2');
     if (result != null && result.predictions != null && mounted) {
       //
 
@@ -819,17 +893,71 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
         */
         var setPLacesData = {
           'name': result.predictions![i].description,
+          'placeId': result.predictions![i].placeId,
+          'refrence': result.predictions![i].reference,
         };
         arrSaveAllAddress.add(setPLacesData);
       }
       // if (kDebugMode) {
       //   print(result.predictions!.first.description);
       // }
-
+      print('clicked');
       setState(() {
         predictions = result.predictions!;
         strUserEnteredLocation = '1';
       });
     }
+  }
+
+  getDataOfThatClickedPlace(
+    getPlaceId,
+  ) async {
+    if (kDebugMode) {
+      print('API');
+    }
+    final resposne = await http.post(
+      Uri.parse(
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$getPlaceId&key=$kGoogle_API_KEY',
+      ),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{
+          'place_id': getPlaceId.toString(),
+          'key': kGoogle_API_KEY.toString(),
+        },
+      ),
+    );
+
+    // convert data to dict
+    var getData = jsonDecode(resposne.body);
+    if (kDebugMode) {
+      print(getData);
+    }
+    /*print('===============================================');
+    print('===============================================');
+    print(getData['result']['photos']);
+    print('===============================================');
+    print('===============================================');*/
+    var arrImageArray = [];
+    arrImageArray = getData['result']['photos'];
+    /*print('===============================================');
+    print(arrImageArray[0]['photo_reference']);
+    print('===============================================');*/
+    //
+    for (int i = 0; i < arrImageArray.length; i++) {
+      //
+      var custom = {
+        'refrence': arrImageArray[i]['photo_reference'].toString(),
+        'credit': arrImageArray[i]['html_attributions'].toString(),
+      };
+      arrPhotosFromGoogle.add(custom);
+    }
+    setState(() {
+      strButtonLoader = false;
+    });
+
+    //
   }
 }

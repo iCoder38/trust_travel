@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 //
 import 'package:jiffy/jiffy.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../screens/travel/add_travel/travel_details_two/travel_details_two.dart';
 //
@@ -418,6 +419,23 @@ Text textWithSemiBoldStyle(str, textSize, textColor) {
       fontSize: textSize,
       fontWeight: FontWeight.w700,
       color: textColor,
+    ),
+  );
+}
+
+ShimmerLoader(
+    {required double width,
+    double? height,
+    Color? color,
+    Decoration? decoration}) {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Container(
+      decoration: decoration,
+      width: width,
+      height: height ?? 10,
+      color: color ?? Colors.white,
     ),
   );
 }

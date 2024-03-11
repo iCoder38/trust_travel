@@ -28,7 +28,8 @@ class TravelBuddyPrefrencesScreen extends StatefulWidget {
       required this.getModeVehicleSeatCapacity,
       required this.getModeVehicleGas,
       required this.getTotalNumberOfDays,
-      this.arrGetStayData});
+      this.arrGetStayData,
+      this.arrGetAllPhotos});
 
   final String getInBuddyTripTitle;
   final String getInBuddyYouFrom;
@@ -41,6 +42,7 @@ class TravelBuddyPrefrencesScreen extends StatefulWidget {
   final String getModeVehicleGas;
   final String getTotalNumberOfDays;
   final arrGetStayData;
+  final arrGetAllPhotos;
 
   @override
   State<TravelBuddyPrefrencesScreen> createState() =>
@@ -908,6 +910,7 @@ class _TravelBuddyPrefrencesScreenState
             'travel_buddy_prefrence': strSelectGender.toString(),
             'travel_age_range': contAgeRange.text.toString(),
             'travel_stays': arrFilterData,
+            'place_photos': widget.arrGetAllPhotos,
             // time
             'time_stamp': DateTime.now().millisecondsSinceEpoch,
           },

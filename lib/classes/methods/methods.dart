@@ -13,6 +13,7 @@ checkDatesValidation(
   title,
   youFrom,
   goingTo,
+  allPhotos,
 ) {
   //
   DateTime date1 = DateTime.parse(startDate.toString());
@@ -35,6 +36,7 @@ checkDatesValidation(
           strTravelGoingTo: goingTo.toString(),
           strTravelStartDate: startDate.toString(),
           strTravelEndDate: endDate.toString(),
+          getArrAllPhotos: allPhotos,
         ),
       ),
     );

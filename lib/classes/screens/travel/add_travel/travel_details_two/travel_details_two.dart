@@ -1,4 +1,6 @@
 // import 'package:flutter/foundation.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +31,15 @@ class TravelDetailsTwoScreen extends StatefulWidget {
       required this.strTravelYouFrom,
       required this.strTravelGoingTo,
       required this.strTravelStartDate,
-      required this.strTravelEndDate});
+      required this.strTravelEndDate,
+      this.getArrAllPhotos});
 
   final String strTravelTitle;
   final String strTravelYouFrom;
   final String strTravelGoingTo;
   final String strTravelStartDate;
   final String strTravelEndDate;
+  final getArrAllPhotos;
 
   @override
   State<TravelDetailsTwoScreen> createState() => _TravelDetailsTwoScreenState();
@@ -819,6 +823,7 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                                   getTotalNumberOfDays:
                                       strTotalNumbersOfDays.toString(),
                                   arrGetStayData: arrAllOfStays,
+                                  arrGetAllPhotos: widget.getArrAllPhotos,
                                 ),
                               ),
                             );
