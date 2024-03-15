@@ -965,7 +965,7 @@ class _TravelBuddyPrefrencesScreenState
       context,
       MaterialPageRoute(
           // builder: (context) => const HomeFeedScreen(),
-          builder: (context) => const BottomBarScreen(specificBarIndex: 2)),
+          builder: (context) => const BottomBarScreen(specificBarIndex: 0)),
     );
   }
 }

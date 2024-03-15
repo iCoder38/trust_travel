@@ -99,7 +99,7 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
     if (country != null) {
       final countryStates = await getStatesOfCountry(country.isoCode);
       for (int i = 0; i < countryStates.length; i++) {
-        if (kDebugMode) {
+        /*if (kDebugMode) {
           print(countryStates[i].name);
           print(countryStates[i].latitude);
           print(countryStates[i].longitude);
@@ -110,7 +110,7 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
           // final countryCitis = await getCountryCities(countryStates[0].isoCode);
           // print(countryCitis[0].name);
           print('=========================');
-        }
+        }*/
         arrAllStates.add(countryStates[i].name);
       }
 

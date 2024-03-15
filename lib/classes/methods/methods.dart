@@ -68,11 +68,11 @@ compareDates(getStartDate, getEndDate) {
   DateTime endDate = DateTime.parse(getEndDate);
   DateTime userCurrentDate = DateTime.parse(getUserCurrentDate);
   /////////////////////////////////////////////
-  if (kDebugMode) {
+  /*if (kDebugMode) {
     print(startDate);
     // print(userCurrentDate);
     print(endDate);
-  }
+  }*/
   // var strTimeStatusMoment = '0';
   // compare start date with current date
   if (startDate.compareTo(userCurrentDate) == 0) {
@@ -119,5 +119,36 @@ compareDates(getStartDate, getEndDate) {
     return strTimeStatusMoment;
   }*/
 }
+
 ////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////// SPLIT DATES //////////////////////////////
+String splitMethods(
+  startDate,
+  endDate,
+) {
+  var startDateIs = startDate.toString();
+  var endDateIs = endDate.toString();
+  // start date
+  var splitStart = startDateIs.split('-');
+  if (kDebugMode) {
+    print(splitStart[0]);
+    print(splitStart[1]);
+    print(splitStart[2]);
+  }
+
+  // end date
+  var splitEnd = endDateIs.split('-');
+  if (kDebugMode) {
+    print(splitEnd[0]);
+    print(splitEnd[1]);
+    print(splitEnd[2]);
+  }
+
+  var mergeDate = '0';
+  mergeDate =
+      '${splitStart[2]}-${splitStart[1]} ~ ${splitEnd[2]}-${splitEnd[1]}';
+
+  return mergeDate;
+}
+////////////////////////////////////////////////////////////////////////////////

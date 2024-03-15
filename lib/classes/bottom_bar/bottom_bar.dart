@@ -60,15 +60,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         body: LazyLoadIndexedStack(
           index: selectedIndex,
           children: const [
-            //
-            // home
-            HomeScreen(),
-            //
-            AddDashboardScreen(),
-            //
-            // travell : list
             TravelListScreen(),
-            //
+            AddDashboardScreen(),
           ],
         ),
         bottomNavigationBar: SizedBox(
@@ -86,7 +79,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             },
             currentIndex: selectedIndex,
             items: const [
-              BottomNavigationBarItem(
+              /*BottomNavigationBarItem(
                 // backgroundColor: home_page_bottom_tab_color(),
                 // backgroundColor: Colors.white,
                 icon: Icon(
@@ -94,6 +87,14 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                   color: Colors.black,
                 ),
                 label: 'Party',
+              ),*/
+              BottomNavigationBarItem(
+                // backgroundColor: community_page_navigation_color(),
+                icon: Icon(
+                  Icons.travel_explore,
+                  color: Colors.black,
+                ),
+                label: 'Travel',
               ),
               BottomNavigationBarItem(
                 // backgroundColor: community_page_navigation_color(),
@@ -107,14 +108,6 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                   color: Colors.black,
                   size: 26,
                 ),
-              ),
-              BottomNavigationBarItem(
-                // backgroundColor: community_page_navigation_color(),
-                icon: Icon(
-                  Icons.travel_explore,
-                  color: Colors.black,
-                ),
-                label: 'Travel',
               ),
             ],
           ),
