@@ -59,9 +59,23 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       child: Scaffold(
         body: LazyLoadIndexedStack(
           index: selectedIndex,
-          children: const [
-            TravelListScreen(),
-            AddDashboardScreen(),
+          children: [
+            const TravelListScreen(),
+            const AddDashboardScreen(),
+            Center(
+              child: Container(
+                height: 40,
+                width: 200,
+                color: Colors.amber,
+                child: Center(
+                  child: text_bold_poppins(
+                    'Profile Page',
+                    Colors.black,
+                    14.0,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
         bottomNavigationBar: SizedBox(
@@ -105,6 +119,19 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 label: 'Create',
                 activeIcon: Icon(
                   Icons.add,
+                  color: Colors.black,
+                  size: 26,
+                ),
+              ),
+              BottomNavigationBarItem(
+                // backgroundColor: community_page_navigation_color(),
+                icon: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+                label: 'Profile',
+                activeIcon: Icon(
+                  Icons.person,
                   color: Colors.black,
                   size: 26,
                 ),

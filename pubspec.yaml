@@ -61,6 +61,7 @@ dependencies:
   google_place: ^0.4.7
   geocoding: ^2.2.1
   http: ^0.13.6
+  carousel_grid: ^1.0.5
 
 dev_dependencies:
   flutter_test:
