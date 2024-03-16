@@ -86,16 +86,6 @@ class _WidgetTravelUIKitState extends State<WidgetTravelUIKit> {
                       startDate: widget.allTravels['travel_start_date'],
                       endDate: widget.allTravels['travel_end_date'],
                     ),
-                    onTap: () {
-                      // get current date function
-                      // getCurrentDate();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TravelDetailsScreen(),
-                        ),
-                      );
-                    },
                   ),
                 ],
               ),

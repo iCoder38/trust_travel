@@ -62,6 +62,7 @@ dependencies:
   geocoding: ^2.2.1
   http: ^0.13.6
   carousel_grid: ^1.0.5
+  gif:
 
 dev_dependencies:
   flutter_test:
