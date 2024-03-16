@@ -102,12 +102,12 @@ class _TravelBuddyPrefrencesScreenState
       'vehicle_gas': widget.getModeVehicleGas,
       'number_of_days': widget.getTotalNumberOfDays,
     };
-    if (kDebugMode) {
+    /*if (kDebugMode) {
       print('=============================');
       print(dictSaveFullData);
       print(widget.arrGetStayData);
       print('=============================');
-    }
+    }*/
     for (int i = 0; i < widget.arrGetStayData.length; i++) {
       //
       if (widget.arrGetStayData[i]['status'] == '1') {

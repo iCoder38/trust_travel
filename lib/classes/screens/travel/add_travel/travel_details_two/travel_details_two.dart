@@ -58,6 +58,9 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
   bool? isCheckedHotel = false;
   bool? isCheckedDormitory = false;
   bool? isCheckedOther = false;
+  //
+  var arrModes = ['Bus', 'Train', 'Flight', 'Car', 'Cab', 'Caravan'];
+  //
   // all text fields
   late final TextEditingController contPrivateCarName;
   late final TextEditingController contPrivateCarSeat;
@@ -373,6 +376,7 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                             padding:
                                 const EdgeInsets.only(right: 24.0, left: 24.0),
                             child: TextFormField(
+                              readOnly: true,
                               // keyboardType: TextInputType.number,
                               style: GoogleFonts.montserrat(
                                 color: Colors.black,
@@ -393,6 +397,51 @@ class _TravelDetailsTwoScreenState extends State<TravelDetailsTwoScreen> {
                               ),
                               maxLines: 1,
                               // maxLength: 25,
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: SizedBox(
+                                          width: double.maxFinite,
+                                          child: ListView.builder(
+                                            shrinkWrap: false,
+                                            itemCount: arrModes.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return ListTile(
+                                                // leading: const Icon(Icons.list),
+                                                // trailing: text,
+                                                title: text_regular_poppins(
+                                                  //
+                                                  arrModes[index],
+                                                  // 'qwerty',
+                                                  Colors.black,
+                                                  14.0,
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    contMode.text =
+                                                        arrModes[index]
+                                                            .toString();
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                              );
+                                            },
+                                          ),
+                                          /*Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          'data',
+                                        ),
+                                      ],
+                                    ),*/
+                                        ),
+                                      );
+                                    });
+                              },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter some text';

@@ -458,12 +458,6 @@ class _AddTravelScreenState extends State<AddTravelScreen> {
                                   'Poppins',
                                   fontSize: 14,
                                 ),
-                                /*hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontStyle: FontStyle.normal,
-                            fontFamily: 'Poppins',
-                            fontSize: 12,
-                          ),*/
                                 suffixIcon: const Icon(
                                   Icons.calendar_month,
                                   size: 18.0,

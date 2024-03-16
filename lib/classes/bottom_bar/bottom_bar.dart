@@ -61,7 +61,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           index: selectedIndex,
           children: [
             const TravelListScreen(),
-            const AddDashboardScreen(),
+            const AddTravelScreen(),
             Center(
               child: Container(
                 height: 40,
@@ -136,6 +136,19 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                   size: 26,
                 ),
               ),
+              /*BottomNavigationBarItem(
+                // backgroundColor: community_page_navigation_color(),
+                icon: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+                label: 'Profile',
+                activeIcon: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                  size: 26,
+                ),
+              ),*/
             ],
           ),
         ),
